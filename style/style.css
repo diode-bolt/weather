@@ -1,5 +1,7 @@
 body {
     margin: 0;
+    background: url(/img/clearSky.png) no-repeat;
+    background-size: cover;
 }
 
 main{
@@ -14,7 +16,6 @@ main{
 }
 
 .location {
-    text-shadow: 4px 3px 5px #FFF, -4px -3px 5px #fff;
     padding: 20px 0;
     font-size: 90px;
     margin: 0;

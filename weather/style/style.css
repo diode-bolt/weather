@@ -4,10 +4,6 @@ body {
     background-size: cover;
 }
 
-main{
-
-}
-
 .container{
     width: 1400px;
     margin: 0 auto;
@@ -50,11 +46,13 @@ main{
     display: flex;
     flex-direction: column;
     background-color: aliceblue;
-    padding: 5px 35px 5px 15px;
+    border-radius: 5px;
+    padding: 5px 15px 5px 35px;
 }
 
 .places-list li {
     padding: 5px;
+    cursor: pointer;
 }
 
 .places-list li:hover {

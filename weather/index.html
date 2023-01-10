@@ -1,13 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="img/vite.svg">
+    <link href="style/style.css" rel="stylesheet" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>weather</title>
+</head>
+<body>
+  <script type="module" src="script.js"></script>
+  <main>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="location">
+              <span class="location__place">
+                welcome!
+              </span>
+              <span class="temperature">
+              </span>
+              <span class="wind"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="desrription_location">
+            </div>
+            <img class="weatherIMG" src="img/clear-day.svg" alt="weather" title="weather">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <form action="/" class="search__location">
+              <input type="text">
+              <input type="submit" value="Get weather">
+            </form>
+          </div>
+        </div>
+      </div>
+  </main>
+</body>
 </html>

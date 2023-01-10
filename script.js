@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function getIconByDescription(description) {
-    const path = "/img/";
+    const path = "img/";
     const Mapping = {
       "Light snow": "snowy-1.svg",
       "Partly cloudy": "cloudy-1-day.svg",

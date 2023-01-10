@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let ol = document.createElement('ol');
   let lastPlaces;
 
-  const API = 'http://api.openweathermap.org/geo/1.0/direct?limit=5&appid=6e1d8dc51c469cac8afd31a78b90ebd9&q=';
+  const API = 'https://api.openweathermap.org/geo/1.0/direct?limit=5&appid=6e1d8dc51c469cac8afd31a78b90ebd9&q=';
   const API2 = 'https://api.openweathermap.org/data/2.5/weather?appid=6e1d8dc51c469cac8afd31a78b90ebd9&lat=';
 
   getWeatherByCoordinats();

@@ -4,6 +4,10 @@ body {
     background-size: cover;
 }
 
+main{
+
+}
+
 .container{
     width: 1400px;
     margin: 0 auto;
@@ -36,27 +40,4 @@ body {
 .wind {
     font-size: 50px;
     grid-area: wind;
-}
-
-.places {
-    width: max-content;
-}
-
-.places-list {
-    display: flex;
-    flex-direction: column;
-    width: max-content;
-    background-color: aliceblue;
-    border-radius: 5px;
-    padding: 5px 15px 5px 35px;
-
-}
-
-.places-list li {
-    cursor: pointer;
-    padding: 5px ;
-}
-
-.places-list li:hover {
-    background-color: aqua;
 }

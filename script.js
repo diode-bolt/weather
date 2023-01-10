@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
   let htmlImgWeather = document.querySelector(".weatherIMG");
   let div = document.createElement('div');
   let ol = document.createElement('ol');
-  let lastPlaces;
 
   const API = 'http://api.openweathermap.org/geo/1.0/direct?limit=5&appid=6e1d8dc51c469cac8afd31a78b90ebd9&q=';
   const API2 = 'https://api.openweathermap.org/data/2.5/weather?appid=6e1d8dc51c469cac8afd31a78b90ebd9&lat=';
@@ -21,24 +20,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   htmlForm.addEventListener("submit", function (ev) {
     ev.preventDefault();
-    div.remove();
+    ol.remove();
     place = htmlInput.value;
-    if (!place) return;
 
     getWeatherByCoordinats();
-  });
-
-  ol.addEventListener("click",(event) => {
-    let i = event.target.index;
-
-    getWeatherByCoordinats(i);
-    place = lastPlaces[i].name;
-    div.remove();
-  });
-
-  document.addEventListener("click", (ev) => {
-    if (ev.target == htmlInput) return;
-    div.remove();
   });
 
   let getPlaces = function() {
@@ -50,12 +35,13 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       timerId = setTimeout(async function() {
-        if (htmlInput.value == "") return;
-
         let places = await getCoordinats(htmlInput.value);
-        lastPlaces = places;
-
-        showPlaces(places);
+        for(let i = 0; i < 5; i++) {
+        console.log(places[i]);
+        }
+        htmlForm.after(div);
+        div.append(ol);
+        ol.append(createListContent(places));
       }, 1000);
     }
 
@@ -64,25 +50,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   htmlForm.addEventListener("keydown",() => getPlaces() );
 
-  function showPlaces(places) {
-    if (ol.innerHTML) ol.innerHTML = '';
-
-    htmlForm.after(div);
-    div.append(ol);
-    ol.append(createListContent(places));
-  }
-
   function createListContent(text) {
     let fragment = new DocumentFragment();
 
     for(let i = 0; i < text.length; i++) {
       let li = document.createElement('li');
       if (text[i]?.state != undefined) {
-        li.append(text[i].name + ", country: " + text[i].country + ", state: " + text[i].state);
+        li.append(text[i].name + " country: " + text[i].country + " state: " + text[i].state);
         fragment.append(li);
-      } else li.append(text[i].name + ", country: " + text[i].country);
-
-      li.index = i;
+        continue;
+      }
+      li.append(text[i].name + " country: " + text[i].country)
       fragment.append(li);
     }
 
@@ -95,11 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   async function getWeatherByCoordinats(i = 0) {
-    let coordinates;
-
-    if (arguments.length == 0) {
-      coordinates = await getCoordinats(place);
-    } else coordinates = lastPlaces;
+    const coordinates = await getCoordinats(place);
 
     let lat = coordinates[i].lat;
     let lon = coordinates[i].lon;
@@ -115,6 +89,8 @@ document.addEventListener("DOMContentLoaded", function () {
     htmlWind.innerText = data.wind.speed + " m/s";
     htmlDescription.innerText = data.weather[0].description;
     htmlImgWeather.src = getIconByDescription(data.weather[0].description);
+
+
   }
 
   function getIconByDescription(description) {

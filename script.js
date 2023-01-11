@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   ol.addEventListener("click",(event) => {
-    if (event.target.)
     let i = event.target.index;
 
     getWeatherByCoordinats(i);

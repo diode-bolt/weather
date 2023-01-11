@@ -8,15 +8,14 @@ it is still under development
 https://diode-bolt.github.io/weather/ --demo
 
 ** Install **
-first step - clone repository
 
-step 2 - install npm
+step 1 - install npm
 
 ```
 npm install
 ```
 
-step 3 - npm run dev
+step 2 - npm run dev
 
 ```
 npm run dev

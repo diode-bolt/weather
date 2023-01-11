@@ -9,7 +9,7 @@ https://diode-bolt.github.io/weather/ --demo
 
 ** Install **
 
-step 1 - install dependensy
+step 1 - install dependencies
 
 ```
 npm install

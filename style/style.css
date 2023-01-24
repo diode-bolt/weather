@@ -38,11 +38,8 @@ body {
     grid-area: wind;
 }
 
-.places {
-    width: max-content;
-}
-
 .places-list {
+    width: max-content;
     display: flex;
     flex-direction: column;
     background-color: aliceblue;

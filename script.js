@@ -7,39 +7,13 @@ document.addEventListener("DOMContentLoaded", function () {
   let htmlForm = document.querySelector(".search__location");
   let htmlInput = htmlForm.querySelector("input[type='text']");
   let htmlImgWeather = document.querySelector(".weatherIMG");
-  let div = document.createElement('div');
-  let ol = document.createElement('ol');
+  let placesList = document.createElement('ol');
+  placesList.className = "places-list";
+
   let lastPlaces;
 
-  const API = 'http://api.openweathermap.org/geo/1.0/direct?limit=5&appid=6e1d8dc51c469cac8afd31a78b90ebd9&q=';
+  const API = 'https://api.openweathermap.org/geo/1.0/direct?limit=5&appid=6e1d8dc51c469cac8afd31a78b90ebd9&q=';
   const API2 = 'https://api.openweathermap.org/data/2.5/weather?appid=6e1d8dc51c469cac8afd31a78b90ebd9&lat=';
-
-  getWeatherByCoordinats();
-
-  div.className = "places";
-  ol.className = "places-list";
-
-  htmlForm.addEventListener("submit", function (ev) {
-    ev.preventDefault();
-    div.remove();
-    place = htmlInput.value;
-    if (!place) return;
-
-    getWeatherByCoordinats();
-  });
-
-  ol.addEventListener("click",(event) => {
-    let i = event.target.index;
-
-    getWeatherByCoordinats(i);
-    place = lastPlaces[i].name;
-    div.remove();
-  });
-
-  document.addEventListener("click", (ev) => {
-    if (ev.target == htmlInput) return;
-    div.remove();
-  });
 
   let getPlaces = function() {
     let timerId;
@@ -62,14 +36,40 @@ document.addEventListener("DOMContentLoaded", function () {
     return timer;
   }();
 
-  htmlForm.addEventListener("keydown",() => getPlaces() );
+  htmlForm.addEventListener("keydown", getPlaces );
+
+  htmlForm.addEventListener("submit", function(ev) {
+    ev.preventDefault();
+    placesList.remove();
+
+    if (!htmlInput.value) {
+      alert("enter place");
+      return;
+    }
+    getWeatherByCoordinats();
+  });
+
+  placesList.addEventListener("click",(event) => {
+    let i = event.target.index;
+
+    getWeatherByCoordinats(i);
+    placesList.remove();
+  });
+
+  document.addEventListener("click", (ev) => {
+    if (ev.target == htmlInput) return;
+    placesList.remove();
+  });
 
   function showPlaces(places) {
-    if (ol.innerHTML) ol.innerHTML = '';
+    if (placesList.innerHTML) placesList.innerHTML = '';
+    if (places.length == 0) {
+      alert("Place not found!");
+      return;
+    }
 
-    htmlForm.after(div);
-    div.append(ol);
-    ol.append(createListContent(places));
+    htmlForm.after(placesList);
+    placesList.append(createListContent(places));
   }
 
   function createListContent(text) {
@@ -77,9 +77,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     for(let i = 0; i < text.length; i++) {
       let li = document.createElement('li');
-      if (text[i]?.state != undefined) {
+      if (text[i].state) {
         li.append(text[i].name + ", country: " + text[i].country + ", state: " + text[i].state);
-        fragment.append(li);
       } else li.append(text[i].name + ", country: " + text[i].country);
 
       li.index = i;
@@ -91,22 +90,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
   async function getCoordinats(place) {
     return await fetch(API + place)
-    .then(response => response.json());
+    .then(response => response.json())
+    .catch(err => {
+      alert("whoops! Something went wrong : " + err);
+    });
   }
 
   async function getWeatherByCoordinats(i = 0) {
     let coordinates;
 
     if (arguments.length == 0) {
-      coordinates = await getCoordinats(place);
+      coordinates = await getCoordinats(htmlInput.value);
     } else coordinates = lastPlaces;
+
+    if(!coordinates[i]) return;
 
     let lat = coordinates[i].lat;
     let lon = coordinates[i].lon;
+    place = coordinates[i].name;
 
     await fetch(API2 +`${lat}&lon=${lon}`)
     .then(response => response.json())
-    .then(data => showWeather(data));
+    .then(data => showWeather(data))
+    .catch(err => {
+      alert("whoops! Something went wrong : " + err);
+    });
   }
 
   function showWeather(data) {

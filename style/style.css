@@ -1,6 +1,10 @@
+* {
+    box-sizing:border-box;
+}
+
 body {
     margin: 0;
-    background: url(/img/clearSky.png) no-repeat;
+    background: url(/img/night.jpg) no-repeat;
     background-size: cover;
 }
 
@@ -11,32 +15,156 @@ body {
 
 }
 
-.location {
-    padding: 20px 0;
-    font-size: 90px;
-    margin: 0;
+.grid {
+    width: fit-content;
     display: grid;
-    column-gap: 50px;
-    grid-template:
-        "place temp"
-        "place wind" 1fr/ minmax(200px, 1fr) minmax(100px, 1fr);
+    grid-template: "loc temp" auto
+                   "air temp"
+                   "form form" auto;
+    gap: 15px;
+    padding-top: 70px;
+}
+
+.location {
+    color: azure;
+    display: inline-block;
+    grid-area: loc;
+    width: fit-content;
+    text-align: center;
+    justify-self: center;
+}
+
+.location__last-update {
+    margin-left: 20px;
 }
 
 .location__place {
-    grid-area: place;
-    align-self: center;
+    margin: 0;
+    font-size: 50px;
+}
+
+input[type="text"] {
+    width: 68.5%;
+    padding: 7px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    box-shadow: 2px 2px 3px black;
+}
+
+input[type="text"]:focus {
+    transform: scale(1.1);
+}
+
+.btn {
+    width: 27.8%;
+    padding: 7px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, rgba(44,41,91,1) 0%, rgba(8,173,207,1) 100%);
+    border: none;
+    color: #FFF;
+    margin-left: 11px;
+    box-shadow: 2px 2px 3px black;
+    cursor: pointer;
+    transition: all 3s;
+}
+
+.btn:hover {
+    background: linear-gradient(90deg, rgb(34, 21, 214) 0%, rgba(8,173,207,1) 100%);
+}
+
+.weather-air {
+    grid-area: air;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    background: #FFF;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 2px 2px 3px black;
+}
+
+.weather-air__pressure {
+    grid-column: span 2;
+    justify-self: center;
+}
+
+.weather-air__pressure svg {
+    max-width: 90%;
+
+}
+
+.weatherIMG {
+    grid-area: icon;
+    width: 100%;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+
+.arrow-wind {
+    position: absolute;
+    top: 30px;
+    max-width: 60%;
+    fill: #abbd45
+}
+
+svg {
+    max-width: 100%;
+    fill: lightseagreen;
+}
+
+.svg {
+    display: flex;
+    width: 70px;
+    justify-content: center;
+    align-content: center;
+    position: relative;
+}
+
+.tempirature {
+    font-size: 10px;
+    grid-area: temp;
+    color: azure;
+    background: linear-gradient(90deg, rgba(44,41,91,1) 0%, rgba(8,173,207,1) 100%);
+    border-radius: 10px;
+    box-shadow: 2px 2px 3px black;
+    padding: 20px;
+    display: grid;
+    justify-items: end;
+    justify-self: start;
+    align-items: center;
+    grid-template: "icon icon" 2fr
+                   "temp temp" 0.5fr
+                   "tmin tmax" 0.5fr;
+}
+
+.temperature__now {
+    font-size: 3em;
+    grid-area: temp;
+    width: 96px;
     text-align: end;
 }
 
-.temperature{
-    font-size: 50px;
-    grid-area: temp;
+.temperature__min {
+    font-size: 1.5em;
+    grid-area: tmin;
 }
 
-.wind {
-    font-size: 50px;
-    grid-area: wind;
+.temperature__max {
+    font-size: 1.5em;
+    grid-area: tmax;
 }
+
+.search__location {
+    grid-area: form;
+    font-size: 20px;
+}
+
+
 
 .places-list {
     width: max-content;
@@ -45,6 +173,7 @@ body {
     background-color: aliceblue;
     border-radius: 5px;
     padding: 5px 15px 5px 35px;
+    grid-column: span 2;
 }
 
 .places-list li {
@@ -54,4 +183,27 @@ body {
 
 .places-list li:hover {
     background-color: aquamarine;
+}
+
+#arrow{
+    transform-origin: 46% 46%;
+    transform: rotate(-180deg);
+    transition: transform 0.8s;
+}
+footer {
+    padding: 20px;
+    background: linear-gradient(90deg, rgba(44,41,91,1) 0%, rgba(8,173,207,1) 100%);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+footer div {
+    margin: auto;
+    width: fit-content;
+}
+
+.data{
+    text-align: center;
+    margin-top: 5px;
 }

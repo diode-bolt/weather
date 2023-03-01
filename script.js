@@ -1,12 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
   let place = "Astana";
   let htmlPlace = document.querySelector(".location__place");
-  let htmlTemperature = document.querySelector(".temperature");
+  let htmlTemperature = document.querySelector(".temperature__now");
+  let htmlTempMin = document.querySelector(".temperature__min");
+  let htmlTempMax = document.querySelector(".temperature__max");
   let htmlWind = document.querySelector(".wind");
   let htmlDescription = document.querySelector(".desrription_location");
   let htmlForm = document.querySelector(".search__location");
   let htmlInput = htmlForm.querySelector("input[type='text']");
   let htmlImgWeather = document.querySelector(".weatherIMG");
+  let htmlHumidity = document.getElementById('humidity');
+  let htmlPressure = document.getElementById('pressure');
+  let currentDate = document.querySelector('.location__date');
   let placesList = document.createElement('ol');
   placesList.className = "places-list";
 
@@ -14,6 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const API = 'https://api.openweathermap.org/geo/1.0/direct?limit=5&appid=6e1d8dc51c469cac8afd31a78b90ebd9&q=';
   const API2 = 'https://api.openweathermap.org/data/2.5/weather?appid=6e1d8dc51c469cac8afd31a78b90ebd9&lat=';
+
+  currentDate.innerText = new Intl.DateTimeFormat({weekday: 'short', day: '2-digit', month: 'short'}).format(new Date());
 
   let getPlaces = function() {
     let timerId;
@@ -119,10 +126,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function showWeather(data) {
     htmlPlace.innerText = place;
-    htmlTemperature.innerText = (data.main.temp - 273).toFixed(1) + "°C";
+    htmlTemperature.innerText = Math.round( (data.main.temp - 273).toFixed(1) ) + "°C";
     htmlWind.innerText = data.wind.speed + " m/s";
     htmlDescription.innerText = data.weather[0].description;
     htmlImgWeather.src = getIconByDescription(data.weather[0].description);
+    htmlHumidity.innerText = data.main.humidity + "%";
+    htmlPressure.innerText = Math.round(data.main.pressure / 1.333) + " mmHg";
+    htmlTempMin.innerText = Math.round( (data.main['temp_min'] - 273).toFixed(1) ) + "°C";
+    htmlTempMax.innerText = Math.round( (data.main['temp_max'] - 273).toFixed(1) ) + "°C";
   }
 
   function getIconByDescription(description) {
@@ -144,4 +155,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     return path + Mapping[description];
   }
+
+
+
 });
+

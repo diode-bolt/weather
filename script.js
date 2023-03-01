@@ -5,11 +5,13 @@ document.addEventListener("DOMContentLoaded", function () {
   let htmlTempMin = document.querySelector(".temperature__min");
   let htmlTempMax = document.querySelector(".temperature__max");
   let htmlWind = document.querySelector(".wind");
+  let directionWind = document.querySelector('.arrow-wind');
   let htmlDescription = document.querySelector(".desrription_location");
   let htmlForm = document.querySelector(".search__location");
   let htmlInput = htmlForm.querySelector("input[type='text']");
   let htmlImgWeather = document.querySelector(".weatherIMG");
   let htmlHumidity = document.getElementById('humidity');
+  let arrowHumidity = document.getElementById('arrow');
   let htmlPressure = document.getElementById('pressure');
   let currentDate = document.querySelector('.location__date');
   let placesList = document.createElement('ol');
@@ -134,6 +136,8 @@ document.addEventListener("DOMContentLoaded", function () {
     htmlPressure.innerText = Math.round(data.main.pressure / 1.333) + " mmHg";
     htmlTempMin.innerText = Math.round( (data.main['temp_min'] - 273).toFixed(1) ) + "°C";
     htmlTempMax.innerText = Math.round( (data.main['temp_max'] - 273).toFixed(1) ) + "°C";
+    rotateArrowSensorHumidity(data.main.humidity);
+    rotateArrowWind(data.wind.deg);
   }
 
   function getIconByDescription(description) {
@@ -156,7 +160,13 @@ document.addEventListener("DOMContentLoaded", function () {
     return path + Mapping[description];
   }
 
+  function rotateArrowSensorHumidity(per) {
+    arrowHumidity.style.transform = `rotate(${-180 + per * 2}deg)`;
+  }
 
+  function rotateArrowWind(deg) {
+    directionWind.style.transform = `rotate(${deg - 90}deg)`
+  }
 
 });
 

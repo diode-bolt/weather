@@ -109,7 +109,8 @@ input[type="text"]:focus {
     position: absolute;
     top: 30px;
     max-width: 60%;
-    fill: #abbd45
+    fill: #abbd45;
+    transition: transform 1s;
 }
 
 svg {
@@ -188,7 +189,7 @@ svg {
 #arrow{
     transform-origin: 46% 46%;
     transform: rotate(-180deg);
-    transition: transform 0.8s;
+    transition: transform 1s;
 }
 footer {
     padding: 20px;

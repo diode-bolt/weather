@@ -1,26 +1,27 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let place = "Astana";
-  let htmlPlace = document.querySelector(".location__place");
-  let htmlTemperature = document.querySelector(".temperature__now");
-  let htmlTempMin = document.querySelector(".temperature__min");
-  let htmlTempMax = document.querySelector(".temperature__max");
-  let htmlWind = document.querySelector(".wind");
-  let directionWind = document.querySelector('.arrow-wind');
-  let htmlDescription = document.querySelector(".desrription_location");
-  let htmlForm = document.querySelector(".search__location");
-  let htmlInput = htmlForm.querySelector("input[type='text']");
-  let htmlImgWeather = document.querySelector(".weatherIMG");
-  let htmlHumidity = document.getElementById('humidity');
-  let arrowHumidity = document.getElementById('arrow');
-  let htmlPressure = document.getElementById('pressure');
-  let currentDate = document.querySelector('.location__date');
-  let placesList = document.createElement('ol');
+  let place = "Astana",
+      htmlPlace = document.querySelector(".location__place"),
+      htmlTemperature = document.querySelector(".temperature__now"),
+      htmlTempMin = document.querySelector(".temperature__min"),
+      htmlTempMax = document.querySelector(".temperature__max"),
+      htmlWind = document.querySelector(".wind"),
+      directionWind = document.querySelector('.arrow-wind'),
+      htmlDescription = document.querySelector(".desrription_location"),
+      htmlLastUpdate = document.querySelector(".location__last-update"),
+      htmlForm = document.querySelector(".search__location"),
+      htmlInput = htmlForm.querySelector("input[type='text']"),
+      htmlImgWeather = document.querySelector(".weatherIMG"),
+      htmlHumidity = document.getElementById('humidity'),
+      arrowHumidity = document.getElementById('arrow'),
+      htmlPressure = document.getElementById('pressure'),
+      currentDate = document.querySelector('.location__date'),
+      placesList = document.createElement('ol');
   placesList.className = "places-list";
 
   let lastPlaces;
 
-  const API = 'https://api.openweathermap.org/geo/1.0/direct?limit=5&appid=6e1d8dc51c469cac8afd31a78b90ebd9&q=';
-  const API2 = 'https://api.openweathermap.org/data/2.5/weather?appid=6e1d8dc51c469cac8afd31a78b90ebd9&lat=';
+  const API = 'https://api.openweathermap.org/geo/1.0/direct?limit=5&appid=6e1d8dc51c469cac8afd31a78b90ebd9&q=',
+        API2 = 'https://api.openweathermap.org/data/2.5/weather?appid=6e1d8dc51c469cac8afd31a78b90ebd9&lat=';
 
   currentDate.innerText = new Intl.DateTimeFormat({weekday: 'short', day: '2-digit', month: 'short'}).format(new Date());
 
@@ -130,12 +131,14 @@ document.addEventListener("DOMContentLoaded", function () {
     htmlPlace.innerText = place;
     htmlTemperature.innerText = Math.round( (data.main.temp - 273).toFixed(1) ) + "°C";
     htmlWind.innerText = data.wind.speed + " m/s";
-    htmlDescription.innerText = data.weather[0].description;
+    // htmlDescription.innerText = data.weather[0].description;
     htmlImgWeather.src = getIconByDescription(data.weather[0].description);
+    htmlImgWeather.alt = htmlImgWeather.title = data.weather[0].description;
     htmlHumidity.innerText = data.main.humidity + "%";
     htmlPressure.innerText = Math.round(data.main.pressure / 1.333) + " mmHg";
     htmlTempMin.innerText = Math.round( (data.main['temp_min'] - 273).toFixed(1) ) + "°C";
     htmlTempMax.innerText = Math.round( (data.main['temp_max'] - 273).toFixed(1) ) + "°C";
+    htmlLastUpdate.innerText = `last update in ${new Date().getHours()}: ${new Date().getMinutes()}`
     rotateArrowSensorHumidity(data.main.humidity);
     rotateArrowWind(data.wind.deg);
   }
@@ -144,15 +147,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const path = "img/";
     const Mapping = {
       "light snow": "snowy-1.svg",
-      "Partly cloudy": "cloudy-1-day.svg",
-      "Light rain": "rainy-1.svg",
-      "Clear": "clear-night.svg",
+      "partly cloudy": "cloudy-1-day.svg",
+      "light rain": "rainy-1.svg",
+      "clear": "clear-night.svg",
       "Sunny": "clear-day.svg",
       "overcast clouds": "cloudy.svg",
       "haze": "haze.svg",
       "clear sky": "clear-day.svg",
       "broken clouds": "cloudy-1-day.svg",
       "scattered clouds": "cloudy-1-day.svg",
+      "clear day": "clear-day.svg",
     };
 
     description = description.split(",")[0];
